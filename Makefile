@@ -15,11 +15,7 @@ build:
 	@docker-compose build
 
 installScript:
-ifeq "$(shell test -f $(INSTALL_BIN) && echo 1 || echo 0)" "1"
-	$(error $(INSTALL_BIN) already exist)
-endif
-	@cp scripts/fclones.sh $(INSTALL_BIN)
-	@echo "$(INSTALL_BIN) has been installed"
+	@INSTALL_BIN=$(INSTALL_BIN) ./scripts/make.sh installScript
 
 uninstall: ## Remove docker image and wrapper script
 uninstall: cleanDockerImage uninstallScript
@@ -30,7 +26,7 @@ ifeq "$(shell docker images | grep $(DOCKER_IMAGE_NAME) >/dev/null; echo $$?)" "
 endif
 
 uninstallScript:
-	@test ! -f $(INSTALL_BIN) || (rm $(INSTALL_BIN);echo "$(INSTALL_BIN) has been removed")
+	@INSTALL_BIN=$(INSTALL_BIN) ./scripts/make.sh uninstallScript
 
 clean: ## Alias for uninstall
 clean: uninstall
