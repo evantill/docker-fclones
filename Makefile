@@ -1,5 +1,4 @@
 INSTALL_DIR ?= "$(HOME)/.local/bin"
-INSTALL_BIN ?= "$(INSTALL_DIR)/fclones"
 
 DOCKER_IMAGE_NAME ?= "evantill/fclones"
 DOCKER_IMAGE_VERSION ?= "latest"
@@ -15,7 +14,7 @@ build:
 	@docker-compose build
 
 installScript:
-	@INSTALL_BIN=$(INSTALL_BIN) ./scripts/make.sh installScript
+	@INSTALL_DIR=$(INSTALL_DIR) ./scripts/make.sh installScript
 
 uninstall: ## Remove docker image and wrapper script
 uninstall: cleanDockerImage uninstallScript
@@ -26,7 +25,7 @@ ifeq "$(shell docker images | grep $(DOCKER_IMAGE_NAME) >/dev/null; echo $$?)" "
 endif
 
 uninstallScript:
-	@INSTALL_BIN=$(INSTALL_BIN) ./scripts/make.sh uninstallScript
+	@INSTALL_DIR=$(INSTALL_DIR) ./scripts/make.sh uninstallScript
 
 clean: ## Alias for uninstall
 clean: uninstall

@@ -4,10 +4,9 @@ set -euo pipefail
 BASEDIR=$(dirname $0)
 
 DEFAULT_INSTALL_DIR="$HOME/.local/bin"
-export INSTALL_DIR="${INSTALL_DIR:-$DEFAULT_INSTALL_DIR}"
+INSTALL_DIR="${INSTALL_DIR:-$DEFAULT_INSTALL_DIR}"
 
-DEFAULT_INSTALL_BIN="$INSTALL_DIR/fclones"
-export INSTALL_BIN="${INSTALL_BIN:-$DEFAULT_INSTALL_BIN}"
+INSTALL_BIN="$INSTALL_DIR/fclones"
 
 installScript(){
   if test -f "${INSTALL_BIN}"; then
@@ -29,7 +28,6 @@ uninstallScript(){
 run_target_in_docker(){
   docker run --rm -it \
     -e INSTALL_DIR="/install" \
-    -e INSTALL_BIN \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v "$PWD:$PWD" \
     -v "$INSTALL_DIR:/install" \
